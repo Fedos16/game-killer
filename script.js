@@ -28,6 +28,9 @@ const TEXT_LOOSE = 'Уууупс! В следующий раз повезет.';
 let raiting = 0;
 let attempt = 0;
 
+let diffPoints;
+let startPoint;
+
 const cartToPage = 4;
 const PIXEL_TO_STATUS_CARD = window.innerWidth > 960 ? 50 : 25;
 
@@ -72,13 +75,14 @@ function createCard({ name, drag, description, url }) {
     descriptionBlock.style.display = 'none';
 
     if (drag) {
-        dragAndDrop(contentElement);
         contentElement.append(descriptionBlock);
     } else {
         contentElement.append(descriptionBlock, nextBackground);
     }
 
     contentElement.append(elementName, elementStatus);
+
+    if (drag) dragAndDrop(contentElement);
 
     return contentElement
 
@@ -242,13 +246,13 @@ function dragAndDrop(element) {
 
         }
 
-        const clientX = e.clientX ? e.clientX : e.touches[0].clientX;
+        const clientX = e.clientX >= 0 ? e.clientX : e.touches[0].clientX;
 
-        diffPoints = (startPoint - clientX) / 1.4;
+        diffPoints = startPoint - clientX;
 
         const revDiffPoints = reverseDiffPoints(diffPoints);
 
-        element.style.transform = `rotate(${revDiffPoints / 80}deg) translateX(${revDiffPoints}px)`;
+        element.style.transform = `rotate(${revDiffPoints / 80}deg) translateX(${reverseDiffPoints(diffPoints)}px)`;
         
         //setStatusCard(diffPoints);
 
@@ -337,6 +341,8 @@ function dragAndDrop(element) {
 
         e.preventDefault();
 
+        startPoint = getStartCard(element);
+
         if (isTouchDevice) {
             document.querySelector('body').addEventListener('touchmove', moveAt);
             document.querySelector('body').addEventListener('touchend', () => {
@@ -353,9 +359,6 @@ function dragAndDrop(element) {
             }, { once: true });
         }
     }
-
-    let diffPoints;
-    const startPoint = getStartCard(element);
 
     if (isTouchDevice) {
         element.addEventListener('touchstart', startDrag, false);
@@ -497,12 +500,4 @@ function promocodeGame() {
 window.onload = () => {
     const buttonShowGame = document.querySelector('.button-open-game');
     if (buttonShowGame) buttonShowGame.addEventListener('click', toggleVisibilityyGame);
-
-    const card = document.querySelector('.window-game_content_block_element');
-    if (card) {
-
-        dragAndDrop(card);
-
-    }
-
 }
