@@ -256,6 +256,8 @@ function dragAndDrop(element) {
         
         setStatusCard(diffPoints);
 
+        return false
+
     }
     function actionCard() {
         function resetCardPosition() {
@@ -337,7 +339,9 @@ function dragAndDrop(element) {
         return resetCardPosition();
     }
 
-    function startDrag() {
+    function startDrag(e) {
+
+        if (e.which != 1) return;
 
         startPoint = getStartCard(element);
 
@@ -358,10 +362,14 @@ function dragAndDrop(element) {
         }
     }
 
+    document.addEventListener('dragstart', () => {
+        return false;
+    })
+
     if (isTouchDevice) {
-        element.addEventListener('touchstart', startDrag);
+        element.addEventListener('touchstart', startDrag, { once: false });
     } else {
-        element.addEventListener('mousedown', startDrag);
+        element.addEventListener('mousedown', startDrag, { once: false });
     }
     
 }
@@ -497,7 +505,7 @@ function promocodeGame() {
 
 window.onload = () => {
 
-    alert('Версия 8');
+    alert('Версия 9');
 
     const buttonShowGame = document.querySelector('.button-open-game');
     if (buttonShowGame) buttonShowGame.addEventListener('click', toggleVisibilityyGame);
