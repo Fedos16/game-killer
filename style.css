@@ -163,6 +163,7 @@ main .main-button:hover {
 }
 .window-game_content_block_element:nth-child(2) {
     position: absolute;
+    background-color: royalblue;
     width: 408px;
     height: 511px;
     top: 0px;

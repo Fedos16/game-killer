@@ -54,11 +54,11 @@ function createElement({ tagName='div', classList=false, handler, onceStatus=tru
 }
 function createCard({ name, drag, description, url }) {
 
-    const listClasses = ['window-game_content_block_element', 'background-person'];
-    if (drag) listClasses.push('drag-cursor');
+    const listClasses = ['window-game_content_block_element'];
+    //if (drag) listClasses.push('drag-cursor');
 
     const contentElement = createElement({ classList: listClasses });
-    contentElement.style.backgroundImage = `url(${url})`;
+    /* contentElement.style.backgroundImage = `url(${url})`;
     const elementName = createElement({ classList: ['window-game_content_block_element__name'], text: name });
 
     const elementStatus = createElement({ classList: ['window-game_content_block_element_status'] });
@@ -72,15 +72,15 @@ function createCard({ name, drag, description, url }) {
     const p = createElement({ tagName: 'p', text: description });
     const btn = createElement({ tagName: 'Button', classList: ['action-button', 'next-card'] });
     descriptionBlock.append(p, btn);
-    descriptionBlock.style.display = 'none';
+    descriptionBlock.style.display = 'none'; */
 
-    if (drag) {
+    /* if (drag) {
         contentElement.append(descriptionBlock);
     } else {
         contentElement.append(descriptionBlock, nextBackground);
     }
 
-    contentElement.append(elementName, elementStatus);
+    contentElement.append(elementName, elementStatus); */
 
     if (drag) dragAndDrop(contentElement);
 
@@ -252,7 +252,7 @@ function dragAndDrop(element) {
 
         const revDiffPoints = reverseDiffPoints(diffPoints);
 
-        element.style.transform = `scale(1.1) rotate(${revDiffPoints / 80}deg) translateX(${reverseDiffPoints(diffPoints)}px)`;
+        element.style.transform = `rotate(${revDiffPoints / 80}deg) translateX(${reverseDiffPoints(diffPoints)}px)`;
         
         setStatusCard(diffPoints);
 
@@ -358,14 +358,10 @@ function dragAndDrop(element) {
         }
     }
 
-    element.addEventListener('dragstart', () => {
-        return false;
-    });
-
     if (isTouchDevice) {
-        element.addEventListener('touchstart', startDrag, false);
+        element.addEventListener('touchstart', startDrag);
     } else {
-        element.addEventListener('mousedown', startDrag, false);
+        element.addEventListener('mousedown', startDrag);
     }
     
 }
@@ -501,7 +497,7 @@ function promocodeGame() {
 
 window.onload = () => {
 
-    alert('Версия 2');
+    alert('Версия 6');
 
     const buttonShowGame = document.querySelector('.button-open-game');
     if (buttonShowGame) buttonShowGame.addEventListener('click', toggleVisibilityyGame);
