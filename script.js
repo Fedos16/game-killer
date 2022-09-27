@@ -58,7 +58,7 @@ function createCard({ name, drag, description, url }) {
     //if (drag) listClasses.push('drag-cursor');
 
     const contentElement = createElement({ classList: listClasses });
-    /* contentElement.style.backgroundImage = `url(${url})`;
+    contentElement.style.backgroundImage = `url(${url})`;
     const elementName = createElement({ classList: ['window-game_content_block_element__name'], text: name });
 
     const elementStatus = createElement({ classList: ['window-game_content_block_element_status'] });
@@ -66,7 +66,7 @@ function createCard({ name, drag, description, url }) {
     const statusName = createElement({ classList: ['window-game_content_block_element_status__name'], text: 'недавно онлайн' });
     elementStatus.append(statusState, statusName);
 
-    const nextBackground = createElement({ classList: ['window-game_content_block_element___next-background'] });
+    /* const nextBackground = createElement({ classList: ['window-game_content_block_element___next-background'] });
 
     const descriptionBlock = createElement({ classList: ['window-game_content_block_element_content'] });
     const p = createElement({ tagName: 'p', text: description });
@@ -78,9 +78,9 @@ function createCard({ name, drag, description, url }) {
         contentElement.append(descriptionBlock);
     } else {
         contentElement.append(descriptionBlock, nextBackground);
-    }
+    } */
 
-    contentElement.append(elementName, elementStatus); */
+    contentElement.append(elementName, elementStatus);
 
     if (drag) dragAndDrop(contentElement);
 
@@ -497,7 +497,7 @@ function promocodeGame() {
 
 window.onload = () => {
 
-    alert('Версия 6');
+    alert('Версия 7');
 
     const buttonShowGame = document.querySelector('.button-open-game');
     if (buttonShowGame) buttonShowGame.addEventListener('click', toggleVisibilityyGame);
