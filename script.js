@@ -227,116 +227,115 @@ function dragAndDrop(element) {
     function getResultCard(value) {
         return value > 0 ? false : true;
     }
-
-    function startDrag(e) {
-        function moveAt(e) {
-            function setStatusCard(diffPoints) {
-                const isLike = diffPoints < 0;
-                
-                const absDiffPoints = Math.abs(diffPoints);
-    
-                if (absDiffPoints > PIXEL_TO_STATUS_CARD) {
-                    const typePerson = isLike ? 'positive-person' : 'negative-person';
-                    element.classList.add(typePerson);
-                } else {
-                    element.classList.remove('positive-person', 'negative-person');
-                }
-
-            }
-
-            const clientX = e.clientX ? e.clientX : e.touches[0].clientX;
-
-            diffPoints = (startPoint - clientX) / 1.4;
-
-            const revDiffPoints = reverseDiffPoints(diffPoints);
-
-            element.style.transform = `rotate(${revDiffPoints / 80}deg) translateX(${revDiffPoints}px)`;
-            
-            setStatusCard(diffPoints);
-    
-        }
-        function actionCard() {
-            function resetCardPosition() {
-                element.style.transform = '';
-            }
-            function nextCard(result) {
-                function getAnswerStatus() {
-                    const statusCard = cards[attempt - 1].status;
-                    return statusCard === result;
-                }
-                function raitingAfterRound() {
-                    const status = getAnswerStatus();
-
-                    raiting += status ? 1 : 0;
-                }
-
-                let xCoord = diffPoints > 0 ? -2000 : 2000;
-                let startCoord = reverseDiffPoints(diffPoints);
-
-                const descriptionBlock = document.querySelector('.window-game_content_block_element_content');
-                if (descriptionBlock) {
-                    descriptionBlock.style = '';
-                    const pDescription = descriptionBlock.querySelector('p');
-                    if (pDescription) {
-                        const cardRow = cards[attempt - 1];
-                        pDescription.textContent = getAnswerStatus() ? cardRow.correctAnswer : cardRow.wrongAnswer;
-                    }
-                }
-
-                const timer = setInterval(() => {
-
-                    element.style.transform = `rotate(${startCoord / 100}deg) translateX(${startCoord}px)`;
-
-                    const status = diffPoints > 0 ? startCoord < xCoord : startCoord > xCoord;
-
-                    if (status) {
-                        element.style.transform = '';
-                        element.style.opacity = '';
-                        element.classList.remove('drag-cursor');
-
-                        if (isTouchDevice) {
-                            element.removeEventListener('touchstart', startDrag);
-                        } else {
-                            element.removeEventListener('mousedown', startDrag);
-                        }
-
-                        clearInterval(timer);
-
-                        raitingAfterRound();
-
-                        const buttonNext = element.querySelector('.next-card');
-                        if (buttonNext) buttonNext.addEventListener('click', nextCardGame, { once: true });
-
-                    } else {
-                        startCoord = diffPoints > 0 ? startCoord - 50 : startCoord + 50;
-
-                        if (Math.abs(startCoord) > 1000) element.style.opacity = '0';
-                    }
-
-                }, 10);
-            }
+    function moveAt(e) {
+        function setStatusCard(diffPoints) {
+            const isLike = diffPoints < 0;
             
             const absDiffPoints = Math.abs(diffPoints);
 
             if (absDiffPoints > PIXEL_TO_STATUS_CARD) {
-
-                const resultCard = getResultCard(diffPoints);
-
-                if (cards.length > attempt + cartToPage) {
-                    const storyBlock = document.querySelector('.window-game_content_block .window-game_content_block__story');
-                    const card = createCard(cards[attempt + cartToPage]);
-                    storyBlock.before(card);
-                }
-
-                attempt += 1;
-                return nextCard(resultCard);
+                const typePerson = isLike ? 'positive-person' : 'negative-person';
+                element.classList.add(typePerson);
+            } else {
+                element.classList.remove('positive-person', 'negative-person');
             }
 
-            return resetCardPosition();
         }
 
-        let diffPoints;
-        const startPoint = getStartCard();
+        const clientX = e.clientX ? e.clientX : e.touches[0].clientX;
+
+        diffPoints = (startPoint - clientX) / 1.4;
+
+        const revDiffPoints = reverseDiffPoints(diffPoints);
+
+        element.style.transform = `rotate(${revDiffPoints / 80}deg) translateX(${revDiffPoints}px)`;
+        
+        setStatusCard(diffPoints);
+
+    }
+    function actionCard() {
+        function resetCardPosition() {
+            element.style.transform = '';
+        }
+        function nextCard(result) {
+            function getAnswerStatus() {
+                const statusCard = cards[attempt - 1].status;
+                return statusCard === result;
+            }
+            function raitingAfterRound() {
+                const status = getAnswerStatus();
+
+                raiting += status ? 1 : 0;
+            }
+
+            let xCoord = diffPoints > 0 ? -2000 : 2000;
+            let startCoord = reverseDiffPoints(diffPoints);
+
+            const descriptionBlock = document.querySelector('.window-game_content_block_element_content');
+            if (descriptionBlock) {
+                descriptionBlock.style = '';
+                const pDescription = descriptionBlock.querySelector('p');
+                if (pDescription) {
+                    const cardRow = cards[attempt - 1];
+                    pDescription.textContent = getAnswerStatus() ? cardRow.correctAnswer : cardRow.wrongAnswer;
+                }
+            }
+
+            const timer = setInterval(() => {
+
+                element.style.transform = `rotate(${startCoord / 100}deg) translateX(${startCoord}px)`;
+
+                const status = diffPoints > 0 ? startCoord < xCoord : startCoord > xCoord;
+
+                if (status) {
+                    element.style.transform = '';
+                    element.style.opacity = '';
+                    element.classList.remove('drag-cursor');
+
+                    if (isTouchDevice) {
+                        element.removeEventListener('touchstart', startDrag);
+                    } else {
+                        element.removeEventListener('mousedown', startDrag);
+                    }
+
+                    clearInterval(timer);
+
+                    raitingAfterRound();
+
+                    const buttonNext = element.querySelector('.next-card');
+                    if (buttonNext) buttonNext.addEventListener('click', nextCardGame, { once: true });
+
+                } else {
+                    startCoord = diffPoints > 0 ? startCoord - 50 : startCoord + 50;
+
+                    if (Math.abs(startCoord) > 1000) element.style.opacity = '0';
+                }
+
+            }, 10);
+        }
+        
+        const absDiffPoints = Math.abs(diffPoints);
+
+        if (absDiffPoints > PIXEL_TO_STATUS_CARD) {
+
+            const resultCard = getResultCard(diffPoints);
+
+            if (cards.length > attempt + cartToPage) {
+                const storyBlock = document.querySelector('.window-game_content_block .window-game_content_block__story');
+                const card = createCard(cards[attempt + cartToPage]);
+                storyBlock.before(card);
+            }
+
+            attempt += 1;
+            return nextCard(resultCard);
+        }
+
+        return resetCardPosition();
+    }
+
+    function startDrag(e) {
+
+        e.preventDefault();
 
         if (isTouchDevice) {
             document.querySelector('body').addEventListener('touchmove', moveAt);
@@ -354,6 +353,9 @@ function dragAndDrop(element) {
             }, { once: true });
         }
     }
+
+    let diffPoints;
+    const startPoint = getStartCard(element);
 
     if (isTouchDevice) {
         element.addEventListener('touchstart', startDrag, false);
