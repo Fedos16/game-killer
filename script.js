@@ -52,19 +52,20 @@ function createElement({ tagName='div', classList=false, handler, onceStatus=tru
 
     return element;
 }
-function createCard({ name, drag, description, url }) {
+function createCard({ name, drag, url }) {
 
     const listClasses = ['window-game_content_block_element'];
     //if (drag) listClasses.push('drag-cursor');
 
     const contentElement = createElement({ classList: listClasses });
     contentElement.style.backgroundImage = `url(${url})`;
-    /* const elementName = createElement({ classList: ['window-game_content_block_element__name'], text: name });
+
+    const elementName = createElement({ classList: ['window-game_content_block_element__name'], text: name });
 
     const elementStatus = createElement({ classList: ['window-game_content_block_element_status'] });
     const statusState = createElement({ classList: ['window-game_content_block_element_status__state'] });
     const statusName = createElement({ classList: ['window-game_content_block_element_status__name'], text: 'недавно онлайн' });
-    elementStatus.append(statusState, statusName); */
+    elementStatus.append(statusState, statusName);
 
     /* const nextBackground = createElement({ classList: ['window-game_content_block_element___next-background'] });
 
@@ -80,7 +81,7 @@ function createCard({ name, drag, description, url }) {
         contentElement.append(descriptionBlock, nextBackground);
     } */
 
-    /* contentElement.append(elementName, elementStatus); */
+    contentElement.append(elementName, elementStatus);
 
     if (drag) dragAndDrop(contentElement);
 
@@ -252,7 +253,7 @@ function dragAndDrop(element) {
 
         const revDiffPoints = reverseDiffPoints(diffPoints);
 
-        element.style.transform = `rotate(${revDiffPoints / 80}deg) translateX(${reverseDiffPoints(diffPoints)}px)`;
+        element.style.transform = `scale(1.08) rotate(${revDiffPoints / 80}deg) translateX(${reverseDiffPoints(diffPoints)}px)`;
         
         setStatusCard(diffPoints);
 
@@ -503,7 +504,7 @@ function promocodeGame() {
 
 window.onload = () => {
 
-    alert('Версия 10');
+    //alert('Версия 10');
 
     const buttonShowGame = document.querySelector('.button-open-game');
     if (buttonShowGame) buttonShowGame.addEventListener('click', toggleVisibilityyGame);

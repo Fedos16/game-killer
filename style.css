@@ -156,7 +156,7 @@ main .main-button:hover {
     justify-content: flex-end;
     user-select: none;
     transition: 50ms;
-    z-index: 1;
+    z-index: 100;
 }
 .drag-cursor {
     cursor: url('images/my-cursor.svg'), auto;
@@ -261,6 +261,7 @@ main .main-button:hover {
     cursor: pointer;
 }
 .window-game_content_block_element__name {
+    position: relative;
     text-transform: uppercase;
     font-size: 28px;
     margin-bottom: 10px;
@@ -268,8 +269,10 @@ main .main-button:hover {
 .window-game_content_block_element_status {
     display: flex;
     align-items: center;
+    position: relative;
 }
 .window-game_content_block_element_status__state {
+    position: relative;
     background-color: #93D07E;
     width: 10px;
     height: 10px;
@@ -277,15 +280,9 @@ main .main-button:hover {
     margin-right: 6px;
 }
 .window-game_content_block_element_status__name {
+    position: relative;
     color: #B0B7C0;
     font-size: 16px;
-}
-
-.window-game_content_block_element__swipe-status {
-    position: absolute;
-    color: #FFFFFF;
-    font-size: 20px;
-    text-transform: uppercase;
 }
 
 button.next-card::after {
@@ -539,8 +536,6 @@ button.next-card::after {
     left: 20px;
     content: "Дизлайк";
 }
-
-
 .positive-person::before {
     background: linear-gradient(232.44deg, 
     rgba(102, 171, 60, 0.5) 0.77%, 
