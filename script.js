@@ -54,8 +54,8 @@ function createElement({ tagName='div', classList=false, handler, onceStatus=tru
 }
 function createCard({ name, drag, url }) {
 
-    const listClasses = ['window-game_content_block_element'];
-    //if (drag) listClasses.push('drag-cursor');
+    const listClasses = ['window-game_content_block_element', 'background-person'];
+    if (drag) listClasses.push('drag-cursor');
 
     const contentElement = createElement({ classList: listClasses });
     contentElement.style.backgroundImage = `url(${url})`;
@@ -66,20 +66,6 @@ function createCard({ name, drag, url }) {
     const statusState = createElement({ classList: ['window-game_content_block_element_status__state'] });
     const statusName = createElement({ classList: ['window-game_content_block_element_status__name'], text: 'недавно онлайн' });
     elementStatus.append(statusState, statusName);
-
-    /* const nextBackground = createElement({ classList: ['window-game_content_block_element___next-background'] });
-
-    const descriptionBlock = createElement({ classList: ['window-game_content_block_element_content'] });
-    const p = createElement({ tagName: 'p', text: description });
-    const btn = createElement({ tagName: 'Button', classList: ['action-button', 'next-card'] });
-    descriptionBlock.append(p, btn);
-    descriptionBlock.style.display = 'none'; */
-
-    /* if (drag) {
-        contentElement.append(descriptionBlock);
-    } else {
-        contentElement.append(descriptionBlock, nextBackground);
-    } */
 
     contentElement.append(elementName, elementStatus);
 
@@ -253,7 +239,7 @@ function dragAndDrop(element) {
 
         const revDiffPoints = reverseDiffPoints(diffPoints);
 
-        element.style.transform = `scale(1.08) rotate(${revDiffPoints / 80}deg) translateX(${reverseDiffPoints(diffPoints)}px)`;
+        element.style.transform = `scale(1.08) rotate(${revDiffPoints / 50}deg) translateX(${reverseDiffPoints(diffPoints)}px)`;
         
         setStatusCard(diffPoints);
 
@@ -274,19 +260,25 @@ function dragAndDrop(element) {
 
                 raiting += status ? 1 : 0;
             }
+            function createdElementsForResultCard() {
+
+                const cardRow = cards[attempt - 1];
+                description = getAnswerStatus() ? cardRow.correctAnswer : cardRow.wrongAnswer;
+
+                const nextBackground = createElement({ classList: ['window-game_content_block_element___next-background'] });
+
+                const descriptionBlock = createElement({ classList: ['window-game_content_block_element_content'] });
+                const p = createElement({ tagName: 'p', text: description });
+                const btn = createElement({ tagName: 'Button', classList: ['action-button', 'next-card'], handler: nextCardGame });
+                descriptionBlock.append(p, btn);
+
+                element.prepend(nextBackground, descriptionBlock);
+            }
 
             let xCoord = diffPoints > 0 ? -2000 : 2000;
             let startCoord = reverseDiffPoints(diffPoints);
 
-            const descriptionBlock = document.querySelector('.window-game_content_block_element_content');
-            if (descriptionBlock) {
-                descriptionBlock.style = '';
-                const pDescription = descriptionBlock.querySelector('p');
-                if (pDescription) {
-                    const cardRow = cards[attempt - 1];
-                    pDescription.textContent = getAnswerStatus() ? cardRow.correctAnswer : cardRow.wrongAnswer;
-                }
-            }
+            element.classList.remove('positive-person', 'negative-person');
 
             const timer = setInterval(() => {
 
@@ -296,7 +288,9 @@ function dragAndDrop(element) {
 
                 if (status) {
                     element.style.transform = '';
-                    element.style.opacity = '';
+                    setTimeout(() => {
+                        element.style.opacity = '';
+                    }, 100)
                     element.classList.remove('drag-cursor');
 
                     if (isTouchDevice) {
@@ -309,8 +303,7 @@ function dragAndDrop(element) {
 
                     raitingAfterRound();
 
-                    const buttonNext = element.querySelector('.next-card');
-                    if (buttonNext) buttonNext.addEventListener('click', nextCardGame, { once: true });
+                    createdElementsForResultCard();
 
                 } else {
                     startCoord = diffPoints > 0 ? startCoord - 50 : startCoord + 50;
@@ -499,8 +492,6 @@ function promocodeGame() {
 
     gameContent.append(contentBlock);
 }
-
-
 
 window.onload = () => {
 
