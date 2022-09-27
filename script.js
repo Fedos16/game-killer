@@ -250,7 +250,7 @@ function dragAndDrop(element) {
 
         element.style.transform = `rotate(${revDiffPoints / 80}deg) translateX(${revDiffPoints}px)`;
         
-        setStatusCard(diffPoints);
+        //setStatusCard(diffPoints);
 
     }
     function actionCard() {
