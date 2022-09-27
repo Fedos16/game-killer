@@ -58,7 +58,7 @@ function createCard({ name, drag, description, url }) {
     //if (drag) listClasses.push('drag-cursor');
 
     const contentElement = createElement({ classList: listClasses });
-    contentElement.style.backgroundImage = `url(${url})`;
+    //contentElement.style.backgroundImage = `url(${url})`;
     const elementName = createElement({ classList: ['window-game_content_block_element__name'], text: name });
 
     const elementStatus = createElement({ classList: ['window-game_content_block_element_status'] });
@@ -497,7 +497,7 @@ function promocodeGame() {
 
 window.onload = () => {
 
-    alert('Версия 7');
+    alert('Версия 8');
 
     const buttonShowGame = document.querySelector('.button-open-game');
     if (buttonShowGame) buttonShowGame.addEventListener('click', toggleVisibilityyGame);
