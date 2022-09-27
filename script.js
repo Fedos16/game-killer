@@ -252,9 +252,9 @@ function dragAndDrop(element) {
 
         const revDiffPoints = reverseDiffPoints(diffPoints);
 
-        element.style.transform = `rotate(${revDiffPoints / 80}deg) translateX(${reverseDiffPoints(diffPoints)}px)`;
+        element.style.transform = `scale(1.1) rotate(${revDiffPoints / 80}deg) translateX(${reverseDiffPoints(diffPoints)}px)`;
         
-        //setStatusCard(diffPoints);
+        setStatusCard(diffPoints);
 
     }
     function actionCard() {
@@ -357,6 +357,10 @@ function dragAndDrop(element) {
             }, { once: true });
         }
     }
+
+    element.addEventListener('dragstart', () => {
+        return false;
+    });
 
     if (isTouchDevice) {
         element.addEventListener('touchstart', startDrag, false);
@@ -497,7 +501,7 @@ function promocodeGame() {
 
 window.onload = () => {
 
-    alert('Версия 1');
+    alert('Версия 2');
 
     const buttonShowGame = document.querySelector('.button-open-game');
     if (buttonShowGame) buttonShowGame.addEventListener('click', toggleVisibilityyGame);
