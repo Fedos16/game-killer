@@ -341,8 +341,6 @@ function dragAndDrop(element) {
 
     function startDrag(e) {
 
-        if (e.which != 1) return;
-
         startPoint = getStartCard(element);
 
         if (isTouchDevice) {
