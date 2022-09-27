@@ -155,7 +155,7 @@ main .main-button:hover {
     flex-direction: column;
     justify-content: flex-end;
     user-select: none;
-    transition: 50ms;
+    transition: 100ms;
     z-index: 100;
 }
 .drag-cursor {

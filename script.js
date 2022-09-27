@@ -54,8 +54,8 @@ function createElement({ tagName='div', classList=false, handler, onceStatus=tru
 }
 function createCard({ name, drag, url }) {
 
-    const listClasses = ['window-game_content_block_element', 'background-person'];
-    if (drag) listClasses.push('drag-cursor');
+    const listClasses = ['window-game_content_block_element'];
+    if (drag && !isTouchDevice) listClasses.push('drag-cursor', 'background-person');
 
     const contentElement = createElement({ classList: listClasses });
     contentElement.style.backgroundImage = `url(${url})`;
